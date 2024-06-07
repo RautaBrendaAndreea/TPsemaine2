@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .form-wrapper
+    .form-container
+      h2 Register
+      form(action='/register', method='POST')
+        if message && message.length > 0
+          each msg in message
+            .alert(class=`alert-${msg.type === 'success' ? 'success' : 'danger'}`)
+              | #{msg.content}
+        .form-group
+          label(for='firstName') First Name
+          input.form-control(type='text', id='firstName', name='firstName', required)
+        .form-group
+          label(for='lastName') Last Name
+          input.form-control(type='text', id='lastName', name='lastName', required)
+        .form-group
+          label(for='email') Email
+          input.form-control(type='email', id='email', name='email', required)
+        .form-group
+          label(for='password') Password
+          input.form-control(type='password', id='password', name='password', required)
+        .form-group
+          label(for='confirmPassword') Confirm Password
+          input.form-control(type='password', id='confirmPassword', name='confirmPassword', required)
+        button.btn.btn-primary(type='submit') Register
+      p
+        | Si vous avez déjà un compte, 
+        a(href='/login') cliquez ici

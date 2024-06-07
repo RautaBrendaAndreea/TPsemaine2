@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .form-wrapper
+    .form-container
+      h2 Login
+      form(action='/login', method='POST')
+        if message.length > 0
+          each msg in message
+            .alert(class=`alert-${msg.type === 'success' ? 'success' : 'danger'}`)
+              | #{msg.content}
+        .form-group
+          label(for='email') Email
+          input.form-control(type='email', id='email', name='email', required)
+        .form-group
+          label(for='password') Password
+          input.form-control(type='password', id='password', name='password', required)
+        button.btn.btn-primary(type='submit') Login
+      p
+        | Si vous n'avez pas de compte, 
+        a(href='/register') cliquez ici

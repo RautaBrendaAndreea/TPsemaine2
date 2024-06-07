@@ -1,5 +1,5 @@
 import express from 'express'; 
-import { registerUser, loginUser, ensureAuthenticated } from '../controllers/userController.js'; 
+import { registerUser, loginUser, ensureAuthenticated, logoutUser } from '../controllers/userController.js'; 
 const router = express.Router(); 
 
 
@@ -17,5 +17,6 @@ router.route('/login')
 router.get('/dashboard', ensureAuthenticated, (req, res) => {
     res.render('dashboard', { user: req.session.user }); // Render dashboard view with user data
 });
+router.get('/logout', logoutUser);
 
 export default router; 

@@ -6,11 +6,17 @@ import crypto from 'crypto';
 export const registerUser = async (req, res) => {
     const { firstName, lastName, email, password, confirmPassword } = req.body;
 
+    if (firstName.trim() === "" || lastName.trim() === "" || email.trim() === "" || password.trim() === "") {
+        req.flash("message", {type: 'error', content: 'Veuillez remplir tous les champs'})
+        return res.redirect('/register');
+    }
+
     // Check if all required fields are provided
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
         req.flash('message', { type: 'error', content: 'All fields are required' });
         return res.redirect('/register');
     }
+
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -73,6 +79,16 @@ export const loginUser = async (req, res) => {
         res.redirect('/login');
     }
 };
+
+export const logoutUser = (req, res ) => {
+    req.session.destroy(err => {
+        if(err) {
+            console.error('Erreur lors de la deconnexion', err);
+            return res.redirect('/dashboard');
+        }
+        res.redirect('/login');
+    })
+}
 
 // Middleware to ensure user authentication
 export const ensureAuthenticated = (req, res, next) => {
